@@ -138,6 +138,7 @@ const StyledContainer = styled(Box)`
   display: flex;
   gap: 40px;
   flex-wrap: wrap;
+  justify-content: center;
 `;
 
 const StakingBox = styled(Box)`
