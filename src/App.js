@@ -6,6 +6,7 @@ import { Box } from "@mui/material";
 
 import CommingSoon from "./pages/CommingSoon";
 import LiquidityStaking from "./pages/LiquidityStaking";
+import VestedStaking from "./pages/VestedStaking";
 import "./App.css";
 import TopBar from "./components/Topbar";
 import LeftBar from "./components/LeftBar";
@@ -26,7 +27,7 @@ function App() {
             <Route exact path="/" element={<Navigate to={"/deposit"} />} />
             <Route exact path={"/deposit"} element={<CommingSoon />} />
             <Route exact path={"/liquiditystaking"} element={<LiquidityStaking />} />
-            <Route exact path={"/vestedstaking"} element={<CommingSoon />} />
+            <Route exact path={"/vestedstaking"} element={<VestedStaking />} />
             <Route exact path={"/docs"} element={<CommingSoon />} />
             <Route exact path={"/community"} element={<CommingSoon />} />
           </Routes>

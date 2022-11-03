@@ -87,45 +87,6 @@ function LiquidityStaking() {
           <StakingBtn>Enable</StakingBtn>
         </StakingBody>
       </StakingBox>
-      <StakingBox>
-        <StakingTitle>
-          <Box display="flex" flexDirection="column">
-            <GradientText family="Montserrat">$IC</GradientText>
-            <MinStaking>Min. Stake 5,000 IC</MinStaking>
-          </Box>
-          <img src="/images/lock.png" />
-        </StakingTitle>
-        <StakingBody>
-          <StakingApy>
-            <ApyDesc>
-              <Box color="#D2D2D2">APY:</Box>
-              <GradientText size={16} weight={400}>
-                IC Earned
-              </GradientText>
-            </ApyDesc>
-            <ApyBox>X%</ApyBox>
-          </StakingApy>
-          <StakingResult>
-            <Box display="flex" gap="4px" flexDirection="column">
-              <Box color="#D2D2D2" fontWeight="500" fontSize="24px" fontFamily="Montserrat">
-                582,278,591
-              </Box>
-              <Box color="#D2D2D2" fontFamily="Montserrat">
-                -55 USD
-              </Box>
-              <GradientText size={16} weight={400}>
-                Stake IC
-              </GradientText>
-            </Box>
-            <MaxBtn onClick={() => console.log("Max clicked!")}>
-              <GradientText size={16} weight={700}>
-                MAX
-              </GradientText>
-            </MaxBtn>
-          </StakingResult>
-          <StakingBtn>Enable</StakingBtn>
-        </StakingBody>
-      </StakingBox>
     </StyledContainer>
   );
 }
@@ -134,7 +95,7 @@ const StyledContainer = styled(Box)`
   position: relative;
   height: 100%;
   width: 100%;
-  padding: 100px 48px 150px 48px;
+  padding: 100px 48px 150px 0px;
   display: flex;
   gap: 40px;
   flex-wrap: wrap;
