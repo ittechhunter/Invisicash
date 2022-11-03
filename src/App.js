@@ -25,7 +25,7 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Navigate to={"/deposit"} />} />
             <Route exact path={"/deposit"} element={<CommingSoon />} />
-            <Route exact path={"/liquiditystaking"} element={<CommingSoon />} />
+            <Route exact path={"/liquiditystaking"} element={<LiquidityStaking />} />
             <Route exact path={"/vestedstaking"} element={<CommingSoon />} />
             <Route exact path={"/docs"} element={<CommingSoon />} />
             <Route exact path={"/community"} element={<CommingSoon />} />

@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { Typography } from "@mui/material";
 import Gradient from "rgt";
 
-const GradientText = ({ children, size = 32, weight = 500 }) => {
+const GradientText = ({ children, size = 32, weight = 500, family="Syne" }) => {
   return (
     <>
-      <Typography fontSize={size} fontFamily={"Syne"} fontWeight={weight}>
+      <Typography fontSize={size} fontFamily={family} fontWeight={weight}>
         <Gradient dir="left-to-right" from="#F4848A" to="#1888A3">
           {children}
         </Gradient>

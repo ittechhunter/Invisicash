@@ -2,9 +2,10 @@
   background-color: #242424;
   min-height: 100vh;
   min-width: 100vw;
-  font-family: "Inter";
+  font-family: "Syne";
   background-image: url("./background.png");
   background-size: cover;
+  position: relative;
 }
 body {
   margin: 0;
