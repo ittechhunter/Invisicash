@@ -42,12 +42,12 @@ function App() {
         </Panel>
       </Box>
       <BottomBar />
-      <LeftBox>
+      {/* <LeftBox>
         <img src="/images/left.png" />
       </LeftBox>
       <RightBox>
         <img src="/images/right.png" />
-      </RightBox>
+      </RightBox> */}
     </BrowserRouter>
   );
 }
