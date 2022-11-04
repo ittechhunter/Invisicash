@@ -17,6 +17,14 @@ import styled from "styled-components";
 function App() {
   const [page, setPage] = useState(0);
 
+  useEffect(() => {
+    const url = window.location.href.slice(window.location.href.lastIndexOf("/") + 1);
+    console.log(url);
+    if (url === "deposit") setPage(0);
+    else if (url === "liquiditystaking") setPage(1);
+    else if (url === "vestedstaking") setPage(2);
+  }, []);
+
   return (
     <BrowserRouter>
       <TopBar />

@@ -8,9 +8,15 @@ const BottomBar = () => {
     <>
       <BottomBox>
         <GradientText size={24}>
-          <span onClick={() => window.open("https://twitter/#")}>Twitter</span>
-          <span onClick={() => window.open("https://telegram/#")}>Telegram</span>
-          <span onClick={() => window.open("https://uniswap/#")}>Uniswap</span>
+          <a href="https://twitter.com/Invisicash" target="_blank">
+            Twitter
+          </a>
+          <a href="https://t.me/InvisiCash" target="_blank">
+            Telegram
+          </a>
+          <a href="https://app.uniswap.org/#/swap?exactField=input&inputCurrency=ETH&outputCurrency=0x02074951886Acc3d58D99D55040165216666A496&chain=mainnet" target="_blank">
+            Uniswap
+          </a>
         </GradientText>
       </BottomBox>
     </>
@@ -22,7 +28,7 @@ const BottomBox = styled(Box)`
   bottom: 55px;
   left: 50%;
   transform: translate(-50%, 0);
-  span {
+  a {
     margin-left: 21px;
     margin-right: 21px;
     cursor: pointer;
