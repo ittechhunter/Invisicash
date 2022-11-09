@@ -10,7 +10,7 @@ export const RPC_ENDPOINT = {
 };
 
 export const getContract = (abi, address, chainID, signer) => {
-  const simpleRpcProvider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT[chainID]);
+  const simpleRpcProvider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT[5]);
   const signerOrProvider = signer ?? simpleRpcProvider;
   return new ethers.Contract(address, abi, signerOrProvider);
 };

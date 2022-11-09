@@ -13,7 +13,7 @@ function Topbar() {
   const sm = useMediaQuery("(max-width: 710px)");
   const account = useAddress();
   const { connect, disconnect } = useWeb3Context();
-  const { totalLocked } = useLockInfo();
+  const { totalLocked, fetchTotalLocked } = useLockInfo();
 
   const connectWallet = () => {
     connect().then((msg) => {
@@ -43,6 +43,10 @@ function Topbar() {
       });
     }
   }, [account]);
+
+  useEffect(() => {
+    fetchTotalLocked();
+  }, []);
 
   return (
     <StyledContainer>

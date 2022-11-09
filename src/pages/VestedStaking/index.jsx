@@ -266,10 +266,7 @@ function VestedStaking() {
               <Box color="#D2D2D2" fontWeight="500" fontSize="24px" fontFamily="Montserrat">
                 {account ? (
                   accountlockinfo[apy + 1].pendingReward !== undefined ? (
-                    Number(accountlockinfo[apy + 1].pendingReward / Math.pow(10, 18)).toLocaleString(undefined, {
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 3,
-                    })
+                    Number(accountlockinfo[apy + 1].pendingReward).toFixed(3)
                   ) : (
                     <Skeleton variant={"text"} width={"120px"} style={{ transform: "unset" }} />
                   )
