@@ -1,7 +1,8 @@
 import { ethers } from "ethers";
-import { HIKARI_ADDR } from "../abis/address";
+import { INVISI_ADDR, STAKING_ADDR, MULTICALL_ADDR } from "../abis/address";
 import ERC20ABI from "../abis/ERC20ABI.json";
-import HIKARIABI from "../abis/HIKARIABI.json";
+import STAKINGABI from "../abis/STAKINGABI.json";
+import MultiCallABI from "../abis/MultiCallABI.json";
 
 export const RPC_ENDPOINT = {
   1: "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
@@ -14,9 +15,36 @@ export const getContract = (abi, address, chainID, signer) => {
   return new ethers.Contract(address, abi, signerOrProvider);
 };
 
-export const getTokenContract = (address, chainID, signer) => {
-  return getContract(ERC20ABI, address, chainID, signer);
+export const getTokenContract = (chainID, signer) => {
+  return getContract(ERC20ABI, INVISI_ADDR, chainID, signer);
 };
-export const getHikariContract = (chainID, signer) => {
-  return getContract(HIKARIABI, HIKARI_ADDR, chainID, signer);
+
+export const getStakingContract = (chainID, signer) => {
+  return getContract(STAKINGABI, STAKING_ADDR, chainID, signer);
+};
+
+export const getMulticallContract = (chainID, signer) => {
+  return getContract(MultiCallABI, MULTICALL_ADDR, chainID, signer);
+};
+
+
+export const multicall = async (abi, calls, chainID) => {
+  try {
+    console.log("calls: ", calls);
+    const itf = new ethers.utils.Interface(abi);
+    const multi = getMulticallContract(chainID);
+    const calldata = calls.map((call) => [
+      call.address.toLowerCase(),
+      itf.encodeFunctionData(call.name, call.params),
+    ]);
+
+    const { returnData } = await multi.aggregate(calldata);
+    const res = returnData.map((call, i) =>
+      itf.decodeFunctionResult(calls[i].name, call)
+    );
+
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
 };

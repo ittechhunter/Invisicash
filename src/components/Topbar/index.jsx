@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Hamburger from "./Hamburger";
 import { Link } from "react-router-dom";
 import { useAddress, useWeb3Context } from "../../hooks/web3Context";
+import useLockInfo from "../../hooks/useLockInfo";
 import GradientText from "../GradientText";
 
 function Topbar() {
@@ -12,6 +13,7 @@ function Topbar() {
   const sm = useMediaQuery("(max-width: 710px)");
   const account = useAddress();
   const { connect, disconnect } = useWeb3Context();
+  const { totalLocked } = useLockInfo();
 
   const connectWallet = () => {
     connect().then((msg) => {
@@ -62,7 +64,12 @@ function Topbar() {
           <GradientBox>
             <Box>Total $IC Staked</Box>
             <Box display="flex" justifyContent="space-between" alignItems="center" marginTop="20px">
-              <ValueBox>18.258 B </ValueBox>
+              <ValueBox>
+                {(totalLocked / Math.pow(10, 18)).toLocaleString(undefined, {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 3,
+                })}
+              </ValueBox>
               <SymbolBox>$IC</SymbolBox>
             </Box>
           </GradientBox>
@@ -87,7 +94,7 @@ const StyledContainer = styled(Box)`
   font-size: 23px;
   line-height: 120%;
   color: black;
-  z-index: 100;
+  z-index: 10;
 `;
 
 const RowContainer = styled(Box)`

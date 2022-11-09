@@ -29,12 +29,12 @@ function VestedStaking() {
               </GradientText>
               <ModeBox>Single Sided Staking</ModeBox>
             </GradientBtn>
-            <GradientBtn padding="20px" active={(mode === 1).toString()} onClick={() => setMode(1)}>
+            {/* <GradientBtn padding="20px" active={(mode === 1).toString()} onClick={() => setMode(1)}>
               <GradientText size={23} weight={700} family={"Montserrat"}>
                 $IC/USDC
               </GradientText>
               <ModeBox>$IC Liquidity Staking</ModeBox>
-            </GradientBtn>
+            </GradientBtn> */}
           </Box>
           <Box marginTop={"30px"} fontFamily="Montserrat" fontWeight={700} fontSize="16px" lineHeight="20px" color="#D2D2D2">
             Lockup Length
@@ -43,25 +43,25 @@ function VestedStaking() {
             <GradientThinBtn paddingTop="12px" paddingBottom="18px" active={(apy === 0).toString()} onClick={() => setApy(0)}>
               <ApyBox>14 days</ApyBox>
               <GradientText size={20} weight={700} family={"Montserrat"}>
-                10% APR
+                44% APR
               </GradientText>
             </GradientThinBtn>
             <GradientThinBtn paddingTop="12px" paddingBottom="18px" active={(apy === 1).toString()} onClick={() => setApy(1)}>
               <ApyBox>30 days</ApyBox>
               <GradientText size={20} weight={700} family={"Montserrat"}>
-                15% APR
+                48% APR
               </GradientText>
             </GradientThinBtn>
             <GradientThinBtn paddingTop="12px" paddingBottom="18px" active={(apy === 2).toString()} onClick={() => setApy(2)}>
               <ApyBox>60 days</ApyBox>
               <GradientText size={20} weight={700} family={"Montserrat"}>
-                18% APR
+                52% APR
               </GradientText>
             </GradientThinBtn>
             <GradientThinBtn paddingTop="12px" paddingBottom="18px" active={(apy === 3).toString()} onClick={() => setApy(3)}>
               <ApyBox>90 days</ApyBox>
               <GradientText size={20} weight={700} family={"Montserrat"}>
-                25% APR
+                56% APR
               </GradientText>
             </GradientThinBtn>
           </Box>
@@ -71,7 +71,7 @@ function VestedStaking() {
               $IC
             </Box>
           </InputBox>
-          <StakingBtn>ZAP</StakingBtn>
+          <StakingBtn>Enable</StakingBtn>
         </StakingBody>
       </StakingBox>
     </StyledContainer>
