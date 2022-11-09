@@ -113,7 +113,9 @@ const Hamburger = ({ page, setPage }) => {
                       <img src={`/icons/${data.url}`} />
                     </Icon>*/}
                     <Box ml={i === 111 ? "-10px" : 0} color={"black"} fontSize={"23px"} fontFamily={"Inter"} zIndex={10}>
-                      {data.text}
+                      <GradientText size={20} weight={700}>
+                        {data.text}
+                      </GradientText>
                     </Box>
                   </Item>
                 </Link>
@@ -135,14 +137,16 @@ const Hamburger = ({ page, setPage }) => {
                       <img src={`/icons/${data.url}`} />
                     </Icon>*/}
                     <Box ml={i === 111 ? "-10px" : 0} color={"black"} fontSize={"23px"} fontFamily={"Inter"} zIndex={10}>
-                      {data.text}
+                      <GradientText size={20} weight={700}>
+                        {data.text}
+                      </GradientText>
                     </Box>
                   </Item>
                 </a>
               );
             })}
 
-            <ConnectButton
+            {/* <ConnectButton
               onClick={() => {
                 let form = document.getElementById("check");
                 if (form) form.checked = false;
@@ -151,7 +155,19 @@ const Hamburger = ({ page, setPage }) => {
               }}
             >
               {!account ? "Connect Wallet" : getAccountString(account)}
-            </ConnectButton>
+            </ConnectButton> */}
+            <ConnectBtn
+              onClick={() => {
+                let form = document.getElementById("check");
+                if (form) form.checked = false;
+                if (account) disconnectWallet();
+                else connectWallet();
+              }}
+            >
+              <GradientText size={20} weight={700}>
+                {!account ? "Connect Wallet" : getAccountString(account)}
+              </GradientText>
+            </ConnectBtn>
           </ItemPanel>
         </Menu>
       </div>
@@ -160,8 +176,8 @@ const Hamburger = ({ page, setPage }) => {
 };
 
 const ItemPanel = styled(Box)`
-  > a:nth-child(${({ active }) => active}) > div > div {
-    color: #fff;
+  > a:nth-child(${({ active }) => active}) > div {
+    border: 1px solid #505050;
   }
 `;
 
@@ -235,6 +251,26 @@ const Logo = styled(Box)`
     margin-right: 20px;
   }
 `;
+
+const ConnectBtn = styled(Box)`
+  position: relative;
+  cursor: pointer;
+  background: #222221;
+  border-radius: 10px;
+  padding: 12px 0 12px 58px;
+  :before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    border-radius: 10px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    z-index: -1;
+    background: linear-gradient(to right, #f4848a, #1888a3);
+  }
+`;
+
 const ConnectButton = styled(Box)`
   padding: 10px 24px;
   width: fit-content;
@@ -277,9 +313,10 @@ const Item = styled(Box)`
   border: 1px solid transparent;
   :hover:not(:disabled) {
     /* border: 1px solid black; */
-    > div {
+    /* > div {
       color: #d2d2d2;
-    }
+    } */
+    border: 1px solid #505050;
   }
   text-align: center;
   transiton: all 0.5s ease-out;

@@ -44,7 +44,7 @@
 /*
   * Just a quick hamburger
   */
-#menuToggle span {
+#menuToggle > span {
   display: block;
   width: 36px;
   height: 3px;
