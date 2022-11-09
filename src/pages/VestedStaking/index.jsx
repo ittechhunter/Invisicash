@@ -432,6 +432,9 @@ const Modal = styled(Box)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (max-width: 430px) {
+    width: 95%;
+  }
 `;
 
 const StyledContainer = styled(Box)`
@@ -443,6 +446,9 @@ const StyledContainer = styled(Box)`
   gap: 40px;
   flex-wrap: wrap;
   justify-content: center;
+  @media (max-width: 1150px) {
+    padding: 48px 8px 150px 8px;
+  }
 `;
 
 const StakingBox = styled(Box)`
@@ -466,6 +472,9 @@ const StakingTitle = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 600px) {
+    padding: 40px 15px 20px 15px;
+  }
 `;
 
 const MinStaking = styled(Box)`
@@ -483,6 +492,9 @@ const StakingBody = styled(Box)`
   padding: 40px 40px 25px 40px;
   display: flex;
   flex-direction: column;
+  @media (max-width: 600px) {
+    padding: 40px 20px 25px 20px;
+  }
 `;
 
 const StakingBtn = styled(Box)`

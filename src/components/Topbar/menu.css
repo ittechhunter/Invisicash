@@ -12,13 +12,13 @@
 #menuToggle {
   z-index: 1000;
   position: fixed;
-  top: 70px;
+  top: 35px;
   right: 40px;
 }
 
 #menuToggle a {
   text-decoration: none;
-  color: black;
+  /* color: black; */
   font-size: 15px;
   transition: color 0.3s ease;
 }
@@ -51,7 +51,7 @@
   margin-bottom: 9px;
   position: relative;
 
-  background: black;
+  background: #D2D2D2;
 
   z-index: 1;
 
@@ -101,12 +101,12 @@
   font-weight: 500;
   position: absolute;
   width: 100vw;
-  height: 100vh;
+  height: 105vh;
 
   margin: -106px 0 0 calc(-100vw + 76px);
   padding: 0;
 
-  background: linear-gradient(to bottom, #f8eedd, #f8eedd);
+  background: #242424;;
   color: black;
   list-style-type: none;
   -webkit-font-smoothing: antialiased;

@@ -8,8 +8,8 @@ import { useAddress, useWeb3Context } from "../../hooks/web3Context";
 import useLockInfo from "../../hooks/useLockInfo";
 import GradientText from "../GradientText";
 
-function Topbar() {
-  const md = useMediaQuery("(max-width: 1100px)");
+function Topbar({page, setPage}) {
+  const md = useMediaQuery("(max-width: 1150px)");
   const sm = useMediaQuery("(max-width: 710px)");
   const account = useAddress();
   const { connect, disconnect } = useWeb3Context();
@@ -57,32 +57,38 @@ function Topbar() {
             Invisicash
           </GradientText>
         </Logo>
-        <Box display="flex" gap="30px">
-          <GradientBox>
-            <Box>Mixing Pool</Box>
-            <Box display="flex" justifyContent="space-between" alignItems="center" marginTop="20px">
-              <ValueBox>18,257</ValueBox>
-              <SymbolBox>ETH</SymbolBox>
+        {md ? (
+          <Hamburger page={page} setPage={setPage}/>
+        ) : (
+          <>
+            <Box display="flex" gap="30px">
+              <GradientBox>
+                <Box>Mixing Pool</Box>
+                <Box display="flex" justifyContent="space-between" alignItems="center" marginTop="20px">
+                  <ValueBox>18,257</ValueBox>
+                  <SymbolBox>ETH</SymbolBox>
+                </Box>
+              </GradientBox>
+              <GradientBox>
+                <Box>Total $IC Staked</Box>
+                <Box display="flex" justifyContent="space-between" alignItems="center" marginTop="20px">
+                  <ValueBox>
+                    {(totalLocked / Math.pow(10, 18)).toLocaleString(undefined, {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 3,
+                    })}
+                  </ValueBox>
+                  <SymbolBox>$IC</SymbolBox>
+                </Box>
+              </GradientBox>
             </Box>
-          </GradientBox>
-          <GradientBox>
-            <Box>Total $IC Staked</Box>
-            <Box display="flex" justifyContent="space-between" alignItems="center" marginTop="20px">
-              <ValueBox>
-                {(totalLocked / Math.pow(10, 18)).toLocaleString(undefined, {
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 3,
-                })}
-              </ValueBox>
-              <SymbolBox>$IC</SymbolBox>
-            </Box>
-          </GradientBox>
-        </Box>
-        <ConnectButton onClick={() => (!account ? connectWallet() : disconnectWallet())}>
-          <GradientText size={20} weight={700}>
-            {!account ? "Connect Wallet" : getAccountString(account)}
-          </GradientText>
-        </ConnectButton>
+            <ConnectButton onClick={() => (!account ? connectWallet() : disconnectWallet())}>
+              <GradientText size={20} weight={700}>
+                {!account ? "Connect Wallet" : getAccountString(account)}
+              </GradientText>
+            </ConnectButton>
+          </>
+        )}
       </RowContainer>
     </StyledContainer>
   );

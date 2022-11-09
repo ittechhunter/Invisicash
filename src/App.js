@@ -27,7 +27,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <TopBar />
+      <TopBar page={page} setPage={setPage} />
       <Box display="flex" width="100%">
         <LeftBar page={page} setPage={setPage} />
         <Panel>

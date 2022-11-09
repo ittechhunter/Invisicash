@@ -5,18 +5,61 @@ import "./menu.css";
 import { Box, useMediaQuery } from "@mui/material";
 import styled from "styled-components";
 
-const Hamburger = ({ setNotification, curpage, setCurPage }) => {
+import { useAddress, useWeb3Context } from "../../hooks/web3Context";
+import useLockInfo from "../../hooks/useLockInfo";
+import GradientText from "../GradientText";
+
+const Hamburger = ({ page, setPage }) => {
   const menuRef = useRef(null);
-  const [active, setActive] = useState(1);
 
   const menus = [
-    { url: "home.png", text: "Home", link: "" },
-    { url: "features.png", text: "Features", link: "features" },
-    { url: "partnerships.png", text: "Partnerships", link: "partnerships" },
-    { url: "trade.png", text: "Trade", link: "trade" },
-    { url: "orders.png", text: "Orders", link: "orders" },
-    { url: "faq.png", text: "FAQ", link: "faq" },
+    {
+      icon: "/icons/deposit.svg",
+      text: "Deposit",
+    },
+    {
+      icon: "/icons/liquidity.svg",
+      text: "Liquidity Staking",
+    },
+    {
+      icon: "/icons/vested.svg",
+      text: "Vested Staking",
+    },
   ];
+
+  const externalMenus = [
+    {
+      icon: "/icons/docs.svg",
+      text: "Docs",
+      pathName: "https://invisicash.gitbook.io/",
+    },
+    {
+      icon: "/icons/community.svg",
+      text: "Community",
+      pathName: "https://t.me/InvisiCash",
+    },
+  ];
+
+  const { connect, disconnect } = useWeb3Context();
+  const account = useAddress();
+
+  const connectWallet = () => {
+    connect().then((msg) => {
+      console.log(msg);
+    });
+  };
+
+  const disconnectWallet = () => {
+    disconnect().then((msg) => {
+      console.log(msg);
+    });
+  };
+
+  const getAccountString = (address) => {
+    const account = address;
+    const len = account.length;
+    return `0x${account.substr(2, 4)}...${account.substr(len - 4, len - 1)}`;
+  };
 
   useEffect(() => {
     document.addEventListener("mouseup", function (event) {
@@ -53,14 +96,14 @@ const Hamburger = ({ setNotification, curpage, setCurPage }) => {
               <img src="/images/logo.png"></img>
             </Logo>
           </Box>
-          <ItemPanel mx={"20px"} mt={"52px"} active={active}>
+          <ItemPanel mx={"20px"} mt={"52px"} active={page + 1}>
             {menus.map((data, i) => {
               return (
                 <Link
-                  to={`/${data.link}`}
+                  to={`/${data.text.replace(" ", "").toLowerCase()}`}
                   style={{ textDecoration: "none" }}
                   onClick={() => {
-                    setActive(i + 1);
+                    setPage(i);
                     let form = document.getElementById("check");
                     if (form) form.checked = false;
                   }}
@@ -76,14 +119,38 @@ const Hamburger = ({ setNotification, curpage, setCurPage }) => {
                 </Link>
               );
             })}
+            {externalMenus.map((data, i) => {
+              return (
+                <a
+                  href={data.pathName}
+                  target={"_blank"}
+                  style={{ textDecoration: "none" }}
+                  onClick={() => {
+                    let form = document.getElementById("check");
+                    if (form) form.checked = false;
+                  }}
+                >
+                  <Item>
+                    {/*<Icon zIndex={10} ml={i === 4 ? "10px" : 0}>
+                      <img src={`/icons/${data.url}`} />
+                    </Icon>*/}
+                    <Box ml={i === 111 ? "-10px" : 0} color={"black"} fontSize={"23px"} fontFamily={"Inter"} zIndex={10}>
+                      {data.text}
+                    </Box>
+                  </Item>
+                </a>
+              );
+            })}
 
             <ConnectButton
               onClick={() => {
                 let form = document.getElementById("check");
                 if (form) form.checked = false;
+                if (account) disconnectWallet();
+                else connectWallet();
               }}
             >
-              Connect
+              {!account ? "Connect Wallet" : getAccountString(account)}
             </ConnectButton>
           </ItemPanel>
         </Menu>
@@ -91,6 +158,74 @@ const Hamburger = ({ setNotification, curpage, setCurPage }) => {
     </nav>
   );
 };
+
+const ItemPanel = styled(Box)`
+  > a:nth-child(${({ active }) => active}) > div > div {
+    color: #fff;
+  }
+`;
+
+const LeftBox = styled(Box)`
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const MenuItem = styled(Link)`
+  border-radius: 12.42px;
+  height: 45.54px;
+  width: 207px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  background: ${({ active }) => (active === "true" ? "linear-gradient(273.78deg, #1E88A3 8.84%, #FA868B 105.18%)" : "#202020")};
+  color: ${({ active }) => (active === "true" ? "#fff" : "rgba(255, 255, 255, 0.5)")};
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 13px;
+  :hover {
+    color: white;
+    > img {
+      opacity: 1;
+    }
+  }
+  > img {
+    margin-left: 20px;
+    margin-right: 20px;
+    opacity: ${({ active }) => (active === "true" ? 1 : 0.5)};
+  }
+`;
+
+const ExternalMenuItem = styled.a`
+  border-radius: 12.42px;
+  height: 45.54px;
+  width: 207px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  background: ${({ active }) => (active === "true" ? "linear-gradient(273.78deg, #1E88A3 8.84%, #FA868B 105.18%)" : "#202020")};
+  color: ${({ active }) => (active === "true" ? "#fff" : "rgba(255, 255, 255, 0.5)")};
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 13px;
+  :hover {
+    color: white;
+    > img {
+      opacity: 1;
+    }
+  }
+  > img {
+    margin-left: 20px;
+    margin-right: 20px;
+    opacity: ${({ active }) => (active === "true" ? 1 : 0.5)};
+  }
+`;
+
 const Logo = styled(Box)`
   margin-right: 55px;
   padding: 25px;
@@ -101,7 +236,8 @@ const Logo = styled(Box)`
   }
 `;
 const ConnectButton = styled(Box)`
-  width: 172px;
+  padding: 10px 24px;
+  width: fit-content;
   height: 63px;
   border: 1px solid #30252f;
   border-radius: 27px;
@@ -129,12 +265,6 @@ const ConnectButton = styled(Box)`
   transition: all 0.5s ease-out;
 `;
 
-const ItemPanel = styled(Box)`
-  > a:nth-child(${({ active }) => active}) > div {
-    background-color: #d8cead;
-  }
-`;
-
 const Item = styled(Box)`
   display: flex;
   align-items: center;
@@ -146,8 +276,12 @@ const Item = styled(Box)`
   width: 100%;
   border: 1px solid transparent;
   :hover:not(:disabled) {
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    > div {
+      color: #d2d2d2;
+    }
   }
+  text-align: center;
   transiton: all 0.5s ease-out;
   @media screen and (max-height: 780px) {
     margin-bottom: 20px;

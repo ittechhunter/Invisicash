@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { Box } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const LeftBar = ({ page, setPage }) => {
-    const menus = [
+  const md = useMediaQuery("(max-width: 1150px)");
+
+  const menus = [
     {
       icon: "/icons/deposit.svg",
       text: "Deposit",
@@ -33,30 +35,32 @@ const LeftBar = ({ page, setPage }) => {
   ];
   return (
     <>
-      <LeftBox>
-        {menus.map((item, i) => {
-          return (
-            <MenuItem
-              to={`/${item.text.replace(" ", "").toLowerCase()}`}
-              target={i > 2 ? "_blank" : ""}
-              onClick={() => setPage(i)}
-              active={(page === i).toString()}
-              key={i}
-            >
-              <img src={item.icon} />
-              {item.text}
-            </MenuItem>
-          );
-        })}
-        {externalMenus.map((item, i) => {
-          return (
-            <ExternalMenuItem href={item.pathName} target={"_blank"} key={i}>
-              <img src={item.icon} />
-              {item.text}
-            </ExternalMenuItem>
-          );
-        })}
-      </LeftBox>
+      {!md && (
+        <LeftBox>
+          {menus.map((item, i) => {
+            return (
+              <MenuItem
+                to={`/${item.text.replace(" ", "").toLowerCase()}`}
+                target={i > 2 ? "_blank" : ""}
+                onClick={() => setPage(i)}
+                active={(page === i).toString()}
+                key={i}
+              >
+                <img src={item.icon} />
+                {item.text}
+              </MenuItem>
+            );
+          })}
+          {externalMenus.map((item, i) => {
+            return (
+              <ExternalMenuItem href={item.pathName} target={"_blank"} key={i}>
+                <img src={item.icon} />
+                {item.text}
+              </ExternalMenuItem>
+            );
+          })}
+        </LeftBox>
+      )}
     </>
   );
 };
