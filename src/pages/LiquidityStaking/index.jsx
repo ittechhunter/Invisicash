@@ -24,7 +24,7 @@ function LiquidityStaking() {
 
   useEffect(() => {
     if (value > balance / Math.pow(10, 18) && !maxpressed && !type) setInsufficient(true);
-    else if (value > accountlockinfo[0].stakedAmount / Math.pow(10, 18) && !maxpressed && type) setInsufficient(true);
+    else if (value > accountlockinfo[0].available / Math.pow(10, 18) && !maxpressed && type) setInsufficient(true);
     else setInsufficient(false);
   }, [value, maxpressed]);
 
@@ -33,7 +33,7 @@ function LiquidityStaking() {
   const onMax = () => {
     setMaxPressed(true);
     if (!type) setValue(balance / Math.pow(10, 18));
-    else setValue(accountlockinfo[0].stakedAmount / Math.pow(10, 18));
+    else setValue(accountlockinfo[0].available / Math.pow(10, 18));
   };
 
   const onConfirm = async () => {
@@ -43,7 +43,6 @@ function LiquidityStaking() {
       const stakingContract = getStakingContract(chainID, provider.getSigner());
       if (type === false) {
         estimateGas = await stakingContract.estimateGas.deposit(maxpressed ? balance : ethers.utils.parseEther(value), 0);
-        console.log(estimateGas.toString(), "Unlock", type, value);
         if (estimateGas / 1 === 0) {
           console.log({
             type: "error",
@@ -59,8 +58,7 @@ function LiquidityStaking() {
         };
         ttx = await stakingContract.deposit(maxpressed ? balance : ethers.utils.parseEther(value), 0, tx);
       } else {
-        estimateGas = await stakingContract.estimateGas.withdraw(maxpressed ? accountlockinfo[0].stakedAmount : ethers.utils.parseEther(value), 0);
-        console.log(estimateGas.toString(), "Unlock", type, value);
+        estimateGas = await stakingContract.estimateGas.withdraw(maxpressed ? accountlockinfo[0].avilable : ethers.utils.parseEther(value), 0);
         if (estimateGas / 1 === 0) {
           console.log({
             type: "error",
@@ -74,7 +72,7 @@ function LiquidityStaking() {
         const tx = {
           gasLimit: Math.ceil(estimateGas * 1.2),
         };
-        ttx = await stakingContract.withdraw(maxpressed ? accountlockinfo[0].stakedAmount : ethers.utils.parseEther(value), 0, tx);
+        ttx = await stakingContract.withdraw(maxpressed ? accountlockinfo[0].avilable : ethers.utils.parseEther(value), 0, tx);
       }
       await ttx.wait();
       fetchAccountLockData();
@@ -119,7 +117,6 @@ function LiquidityStaking() {
     try {
       const stakingContract = getStakingContract(chainID, provider.getSigner());
       const estimateGas = await stakingContract.estimateGas.claimReward(i);
-      console.log(estimateGas.toString(), "Unlock");
       if (estimateGas / 1 === 0) {
         console.log({
           type: "error",
@@ -144,17 +141,6 @@ function LiquidityStaking() {
     setPending(false);
   };
 
-  // console.log("AccountInfo[0]: ", accountlockinfo[0]);
-  // {account ? (
-  //   accountlockinfo[i].pendingReward !== undefined ? (
-  //     <Box>{Number(accountlockinfo[i].pendingReward).toFixed(3)}</Box>
-  //   ) : (
-  //     <Skeleton variant={"text"} width={xs ? "70px" : "120px"} style={{ transform: "unset" }} />
-  //   )
-  // ) : (
-  //   "0.000"
-  // )}
-
   return (
     <StyledContainer>
       <StakingBox>
@@ -169,35 +155,7 @@ function LiquidityStaking() {
           <StakingApy>
             <ApyDesc>
               <GradientText size={16} weight={400}>
-                IC Earned :
-              </GradientText>
-              <Box fontSize="20px" fontWeight="400">
-                {account ? (
-                  accountlockinfo[0].pendingReward !== undefined ? (
-                    <GradientText size={20} weight={400}>
-                      {Number(accountlockinfo[0].pendingReward).toFixed(3)}
-                    </GradientText>
-                  ) : (
-                    <Skeleton variant={"text"} width={"120px"} style={{ transform: "unset" }} />
-                  )
-                ) : (
-                  <GradientText size={20} weight={400}>
-                    0.000
-                  </GradientText>
-                )}
-              </Box>
-            </ApyDesc>
-            <Box>
-              <Box color="#D2D2D2" marginBottom="8px" textAlign="right">
-                APR:
-              </Box>
-              <ApyBox>40%</ApyBox>
-            </Box>
-          </StakingApy>
-          <StakingResult>
-            <Box display="flex" gap="4px" flexDirection="column">
-              <GradientText size={16} weight={400}>
-                Staked IC
+                IC Staked :
               </GradientText>
               <Box color="#D2D2D2" fontWeight="500" fontSize="24px" fontFamily="Montserrat">
                 {account ? (
@@ -213,10 +171,34 @@ function LiquidityStaking() {
                   0.0
                 )}
               </Box>
+            </ApyDesc>
+            <Box>
+              <Box color="#D2D2D2" marginBottom="8px" textAlign="right">
+                APR:
+              </Box>
+              <ApyBox>40%</ApyBox>
+            </Box>
+          </StakingApy>
+          <StakingResult>
+            <Box display="flex" gap="4px" flexDirection="column">
+              <GradientText size={16} weight={400}>
+                Earned IC
+              </GradientText>
+              <Box color="#D2D2D2" fontWeight="500" fontSize="24px" fontFamily="Montserrat">
+                {account ? (
+                  accountlockinfo[0].pendingReward !== undefined ? (
+                    Number(accountlockinfo[0].pendingReward).toFixed(3)
+                  ) : (
+                    <Skeleton variant={"text"} width={"120px"} style={{ transform: "unset" }} />
+                  )
+                ) : (
+                  0.0
+                )}
+              </Box>
               <Box color="#D2D2D2" fontFamily="Montserrat">
                 {account ? (
-                  accountlockinfo[0].stakedAmount !== undefined ? (
-                    Number(accountlockinfo[0].stakedAmount / Math.pow(10, 18)).toLocaleString(undefined, {
+                  accountlockinfo[0].pendingReward !== undefined ? (
+                    Number(accountlockinfo[0].pendingReward / Math.pow(10, 18)).toLocaleString(undefined, {
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 3,
                     })
@@ -391,6 +373,7 @@ const Modal = styled(Box)`
   flex-direction: column;
   align-items: center;
 `;
+
 const ICInput = styled.input`
   background: transparent;
   border: none;
@@ -486,7 +469,7 @@ const StakingBtn = styled(Box)`
 
   /* #FFFFFF */
   color: #ffffff;
-  width: 327px;
+  width: 100%;
   height: 56px;
   cursor: ${({ disabled }) => (disabled === true ? "not-allowed" : "pointer")};
 `;

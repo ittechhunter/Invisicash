@@ -30,7 +30,6 @@ export const getMulticallContract = (chainID, signer) => {
 
 export const multicall = async (abi, calls, chainID) => {
   try {
-    console.log("calls: ", calls);
     const itf = new ethers.utils.Interface(abi);
     const multi = getMulticallContract(chainID);
     const calldata = calls.map((call) => [

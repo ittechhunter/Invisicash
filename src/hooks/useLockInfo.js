@@ -83,7 +83,6 @@ export function LockInfoProvider({ children }) {
           totalStaked: result[i].totalStaked / Math.pow(10, 18),
         });
       }
-      console.log(temp);
       setLockInfo(temp);
     } catch (error) {
       console.log(error);
@@ -112,8 +111,8 @@ export function LockInfoProvider({ children }) {
           pendingReward: result[i * 2][0] / Math.pow(10, 18),
           stakedAmount: result[i * 2 + 1][0],
           available: result[i * 2 + 1][1],
+          locked: result[i * 2 + 1][2],
         });
-      console.log(temp);
       setAccountLockInfo(temp);
     } catch (error) {
       console.log(error);
@@ -130,7 +129,6 @@ export function LockInfoProvider({ children }) {
         },
       ];
       const result = await multicall(ERC20ABI, calls, chainID);
-      console.log(result);
       setUnLockAllow(result[0][0] > ethers.utils.parseEther("10000"));
     } catch (error) {
       console.log(error);
