@@ -18,6 +18,10 @@ const Hamburger = ({ page, setPage }) => {
       text: "Deposit",
     },
     {
+      icon: "/icons/deposit.svg",
+      text: "Withdraw",
+    },
+    {
       icon: "/icons/liquidity.svg",
       text: "Liquidity Staking",
     },

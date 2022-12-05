@@ -12,6 +12,10 @@ const LeftBar = ({ page, setPage }) => {
       text: "Deposit",
     },
     {
+      icon: "/icons/deposit.svg",
+      text: "Withdraw",
+    },
+    {
       icon: "/icons/liquidity.svg",
       text: "Liquidity Staking",
     },
@@ -41,7 +45,7 @@ const LeftBar = ({ page, setPage }) => {
             return (
               <MenuItem
                 to={`/${item.text.replace(" ", "").toLowerCase()}`}
-                target={i > 2 ? "_blank" : ""}
+                target={i > 3 ? "_blank" : ""}
                 onClick={() => setPage(i)}
                 active={(page === i).toString()}
                 key={i}

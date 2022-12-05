@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 
 import CommingSoon from "./pages/CommingSoon";
+import Deposit from "./pages/Deposit";
+import Withdraw from "./pages/Withdraw";
 import LiquidityStaking from "./pages/LiquidityStaking";
 import VestedStaking from "./pages/VestedStaking";
 import "./App.css";
@@ -33,7 +35,8 @@ function App() {
         <Panel>
           <Routes>
             <Route exact path="/" element={<Navigate to={"/deposit"} />} />
-            <Route exact path={"/deposit"} element={<CommingSoon />} />
+            <Route exact path={"/deposit"} element={<Deposit />} />
+            <Route exact path={"/withdraw"} element={<Withdraw />} />
             <Route exact path={"/liquiditystaking"} element={<LiquidityStaking />} />
             <Route exact path={"/vestedstaking"} element={<VestedStaking />} />
             <Route exact path={"/docs"} element={<CommingSoon />} />
